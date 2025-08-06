@@ -8,4 +8,7 @@
 - name: Sudoer
   community.general.sudoers:
     name: "{{ username }}"
+    user: "{{ username }}"
+    commands:
+      - ALL
     nopassword: true
