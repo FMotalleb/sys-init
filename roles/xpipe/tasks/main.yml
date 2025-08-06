@@ -17,7 +17,7 @@
 
 - name: Add xpipe repository
   become: true
-  ansible.builtin.apt_repository:
+  ansible.builtin.aptre:
     repo: deb [signed-by=/usr/share/keyrings/xpipe.gpg] https://apt.xpipe.io stable main
     state: present
 
