@@ -1,10 +1,4 @@
 ---
-- name: Add Telegram repository
-  become: true
-  ansible.builtin.apt_repository:
-    repo: ppa:atareao/telegram
-    state: present
-
 - name: Install Telegram Desktop
   become: true
   ansible.builtin.apt:
