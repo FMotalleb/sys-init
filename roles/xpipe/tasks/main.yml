@@ -1,8 +1,8 @@
 ---
-- name: Install prerequisites
+- name: Install deb packages
   become: true
   ansible.builtin.get_url:
-    url: https://github.com/xpipe-io/xpipe/releases/download/latest/xpipe-installer-linux-x86_64.deb
+    url: https://github.com/xpipe-io/xpipe/releases/latest/download/xpipe-installer-linux-x86_64.deb
     dest: /tmp/xpipe.deb
 
 - name: Install xpipe
