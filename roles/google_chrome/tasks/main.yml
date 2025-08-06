@@ -5,19 +5,20 @@
     name:
       - apt-transport-https
       - curl
+      - gnupg
     state: present
 
 - name: Add Google Chrome signing key
   become: true
-  ansible.builtin.get_url:
-    url: https://dl.google.com/linux/linux_signing_key.pub
-    dest: /etc/apt/trusted.gpg.d/google.gpg
-    mode: '0644'
+  ansible.builtin.shell: |
+    curl -sL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome.gpg
+  args:
+    creates: /usr/share/keyrings/google-chrome.gpg
 
 - name: Add Google Chrome repository
   become: true
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+    repo: deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome.gpg] http://dl.google.com/linux/chrome/deb/ stable main
     state: present
 
 - name: Install Google Chrome
