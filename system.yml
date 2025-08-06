@@ -7,7 +7,9 @@
   roles:
     - user
     - shell
+    - google_chrome
     - packages
+    - throne
     - vscode
     - xpipe
     - nushell
