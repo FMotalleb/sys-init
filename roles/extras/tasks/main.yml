@@ -1,0 +1,30 @@
+---
+- name: Install docker
+  apt:
+    name: docker.io
+    state: present
+
+- name: Install podman
+  apt:
+    name: podman
+    state: present
+
+- name: Install prerequisites for kubectl
+  apt:
+    name: 
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    state: present
+
+- name: Download kubectl signing key
+  shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+
+- name: Add kubectl repository
+  shell: echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list
+
+- name: Install kubectl
+  apt:
+    name: kubectl
+    state: present
+    update_cache: yes

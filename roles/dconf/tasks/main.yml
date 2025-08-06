@@ -1,0 +1,16 @@
+---
+- name: Check for dconf backup file
+  stat:
+    path: "roles/dconf/files/dconf_backup.ini"
+  register: dconf_backup_file
+
+- name: Load dconf settings
+  block:
+    - name: Copy dconf backup
+      copy:
+        src: dconf_backup.ini
+        dest: /tmp/dconf_backup.ini
+
+    - name: Load dconf settings from backup
+      shell: dconf load / < /tmp/dconf_backup.ini
+  when: dconf_backup_file.stat.exists

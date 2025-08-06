@@ -1,0 +1,14 @@
+---
+- name: Find dotfiles
+  find:
+    paths: "{{ role_path }}/files"
+    hidden: yes
+  register: dotfiles_to_copy
+
+- name: Copy dotfiles
+  copy:
+    src: "{{ item.path }}"
+    dest: "/home/{{ username }}/.{{ item.path | basename }}"
+  loop: "{{ dotfiles_to_copy.files }}"
+  loop_control:
+    label: "{{ item.path | basename }}"

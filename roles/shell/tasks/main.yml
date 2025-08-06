@@ -1,0 +1,6 @@
+---
+- name: Install shell packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ shell_packages }}"

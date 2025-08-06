@@ -1,0 +1,25 @@
+programming languages:
+- rust
+- go
+- ruby
+- python
+- nodejs
+
+ide:
+- vscode
+- helix
+
+gnome-extensions:
+- $(my current extensions on this system)
+- $(copy my own dconf as base config)
+
+shell:
+- nushell (use cargo install)
+  set as default shell
+
+
+extras:
+- docker
+- podman
+- kubectl
+- xpipe

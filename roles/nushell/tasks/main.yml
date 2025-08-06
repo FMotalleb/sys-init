@@ -1,0 +1,12 @@
+---
+- name: Install nushell
+  community.general.cargo:
+    name: nu
+    state: present
+  become: yes
+  become_user: "{{ username }}"
+
+- name: Set nushell as default shell
+  user:
+    name: "{{ username }}"
+    shell: "/home/{{ username }}/.cargo/bin/nu"

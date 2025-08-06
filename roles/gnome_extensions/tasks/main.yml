@@ -1,0 +1,14 @@
+---
+- name: Install GNOME Shell Extensions
+  ansible.builtin.command:
+    cmd: "gnome-extensions install {{ item }}"
+  loop: "{{ gnome_extensions }}"
+  register: install_result
+  changed_when: "'already installed' not in install_result.stderr"
+  failed_when: install_result.rc != 0 and 'already installed' not in install_result.stderr
+
+- name: Enable GNOME Shell Extensions
+  ansible.builtin.command:
+    cmd: "gnome-extensions enable {{ item }}"
+  loop: "{{ gnome_extensions }}"
+  changed_when: true
