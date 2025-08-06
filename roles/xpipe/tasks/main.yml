@@ -3,11 +3,11 @@
   become: true
   ansible.builtin.get_url:
     url: https://github.com/xpipe-io/xpipe/releases/download/latest/xpipe-installer-linux-x86_64.deb
-    dest: /tmp/xpipe.dev
+    dest: /tmp/xpipe.deb
 
 - name: Install xpipe
   become: true
   ansible.builtin.apt:
     auto_install_module_deps: true
     install_recommends: true
-    deb: /tmp/xpipe.dev
+    deb: /tmp/xpipe.deb
