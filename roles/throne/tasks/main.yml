@@ -4,20 +4,25 @@
     url: "https://api.github.com/repos/throneproj/Throne/releases/latest"
     method: GET
     return_content: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
   register: throne_latest_release
 
 - name: Set release facts
   ansible.builtin.set_fact:
     throne_version: "{{ throne_latest_release.json.tag_name | regex_replace('^v', '') }}"
     throne_download_url: "{{ (throne_latest_release.json.assets | selectattr('name', 'match', '.*linux-x64.deb$') | list | first).browser_download_url }}"
+  when: throne_latest_release is not skipped
 
 - name: Download Throne release
   ansible.builtin.get_url:
     url: "{{ throne_download_url }}"
     dest: "/tmp/throne-{{ throne_version }}.deb"
   become: true
+  when: throne_latest_release is not skipped
 
 - name: Install Throne from .deb
   ansible.builtin.apt:
     deb: "/tmp/throne-{{ throne_version }}.deb"
   become: true
+  when: throne_latest_release is not skipped

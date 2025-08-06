@@ -1,6 +1,6 @@
 ---
-- name: Install Google Chrome
+- name: Install Telegram Desktop
   ansible.builtin.apt:
-    name: google-chrome-stable
+    name: telegram-desktop
     state: present
   become: true
