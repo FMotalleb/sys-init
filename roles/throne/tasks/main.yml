@@ -1,18 +1,15 @@
 - name: Set release facts
   ansible.builtin.set_fact:
     throne_version: "1.0.0"
-    throne_download_url: "https://github.com/throneproj/Throne/releases/download/{{throne_version}}/Throne-1.0.0-debian-x64.deb"
-  when: throne_latest_release is not skipped
+    throne_download_url: "https://github.com/throneproj/Throne/releases/download/{{ throne_version }}/Throne-{{ throne_version }}-debian-x64.deb"
 
 - name: Download Throne release
   ansible.builtin.get_url:
     url: "{{ throne_download_url }}"
     dest: "/tmp/throne-{{ throne_version }}.deb"
   become: true
-  when: throne_latest_release is not skipped
 
 - name: Install Throne from .deb
   ansible.builtin.apt:
     deb: "/tmp/throne-{{ throne_version }}.deb"
   become: true
-  when: throne_latest_release is not skipped
