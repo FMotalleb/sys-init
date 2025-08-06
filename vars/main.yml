@@ -1,4 +1,5 @@
 username: motalleb
+throne_version: "1.0.0"
 shell_packages:
   - git
   - curl

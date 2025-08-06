@@ -6,4 +6,6 @@
 - name: Install Google Chrome
   become: true
   ansible.builtin.apt:
+    auto_install_module_deps: true
+    install_recommends: true
     deb: /tmp/chrome.deb

@@ -1,29 +1,13 @@
 ---
 - name: Install prerequisites
   become: true
-  ansible.builtin.apt:
-    name:
-      - apt-transport-https
-      - curl
-      - gnupg
-    state: present
-
-- name: Import xpipe GPG key
-  become: true
-  ansible.builtin.shell: |
-    curl -sL https://xpipe.io/signatures/crschnick.asc | gpg --dearmor | sudo tee /usr/share/keyrings/xpipe.gpg > /dev/null
-  args:
-    creates: /usr/share/keyrings/xpipe.gpg
-
-- name: Add xpipe repository
-  become: true
-  ansible.builtin.apt:
-    repo: deb [signed-by=/usr/share/keyrings/xpipe.gpg] https://apt.xpipe.io stable main
-    state: present
+  ansible.builtin.get_url:
+    url: https://github.com/xpipe-io/xpipe/releases/download/latest/xpipe-installer-linux-x86_64.deb
+    dest: /tmp/xpipe.dev
 
 - name: Install xpipe
   become: true
   ansible.builtin.apt:
-    name: xpipe
-    state: present
-    update_cache: yes
+    auto_install_module_deps: true
+    install_recommends: true
+    deb: /tmp/xpipe.dev
