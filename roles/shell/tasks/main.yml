@@ -4,3 +4,24 @@
     name: "{{ item }}"
     state: present
   loop: "{{ shell_packages }}"
+
+- name: Download Oh-My-Posh
+  ansible.builtin.fetch:
+    src: "https://github.com/JanDeDobbeleer/oh-my-posh/releases/latest/download/posh-linux-amd64"
+    dest: /usr/local/bin/oh-my-posh
+
+- name: Setup Fury list
+  ansible.builtin.deb822_repository:
+    name: fury
+    trusted: true
+    types:
+      - deb
+    targets:
+      - /
+    uris:
+      - https://apt.fury.io/rsteube/
+- name: Install Carapace bin
+  ansible.builtin.apt:
+    name:
+      - carapace-bin
+    state: latest

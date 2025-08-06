@@ -6,15 +6,12 @@ shell_packages:
   - zsh
 system_packages:
   - build-essential
-  - rustc
-  - cargo
+  - rustup
   - golang
   - ruby
   - python3
   - nodejs
   - hx
-  - google-chrome-stable
-  - telegram-desktop
 gnome_extensions:
   - ddterm@amezin.github.com
   - todo.txt@bart.libert.gmail.com

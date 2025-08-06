@@ -14,7 +14,7 @@
     - xpipe
     - nushell
     - extras
-    - gnome_extensions
-    - dconf
+    # - gnome_extensions
+    # - dconf
     - dotfiles
     - telegram

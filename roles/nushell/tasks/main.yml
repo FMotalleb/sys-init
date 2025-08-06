@@ -1,4 +1,7 @@
 ---
+- name: Rustup initial
+  ansible.builtin.command:
+    cmd: "rustup default stable"
 - name: Install nushell
   community.general.cargo:
     name: nu
