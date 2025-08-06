@@ -1,3 +1,28 @@
 ---
-- name: Install xpipe
-  shell: bash <(curl -sL https://github.com/xpipe-io/xpipe/raw/master/get-xpipe.sh)
+- name: Get latest xpipe release
+  ansible.builtin.uri:
+    url: "https://api.github.com/repos/xpipe-io/xpipe/releases/latest"
+    method: GET
+    return_content: yes
+    headers:
+      Accept: "application/vnd.github.v3+json"
+  register: xpipe_latest_release
+
+- name: Set release facts
+  ansible.builtin.set_fact:
+    xpipe_version: "{{ (xpipe_latest_release.content | from_json).tag_name | regex_replace('^v', '') }}"
+    xpipe_download_url: "{{ ((xpipe_latest_release.content | from_json).assets | selectattr('name', 'match', '.*installer-linux-x86_64.deb$') | list | first).browser_download_url }}"
+  when: xpipe_latest_release is not skipped
+
+- name: Download xpipe release
+  ansible.builtin.get_url:
+    url: "{{ xpipe_download_url }}"
+    dest: "/tmp/xpipe-{{ xpipe_version }}.deb"
+  become: true
+  when: xpipe_latest_release is not skipped
+
+- name: Install xpipe from .deb
+  ansible.builtin.apt:
+    deb: "/tmp/xpipe-{{ xpipe_version }}.deb"
+  become: true
+  when: xpipe_latest_release is not skipped
